@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Animated Dark Mode Button |Dev Mode</title>
+    <!-- ICONS CDN FONTAWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
+</head>
+<body>
+    
+  <div class="btn">
+    <div class="btn__indicator">
+      <div class="btn__icon-container">
+        <i class="btn__icon fa-solid"></i>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const body = document.querySelector('body');
+const btn = document.querySelector('.btn');
+const icon = document.querySelector('.btn__icon');
+
+//to save the dark mode use the object "local storage".
+
+//function that stores the value true if the dark mode is activated or false if it's not.
+function store(value){
+  localStorage.setItem('darkmode', value);
+}
+
+//function that indicates if the "darkmode" property exists. It loads the page as we had left it.
+function load(){
+  const darkmode = localStorage.getItem('darkmode');
+
+  //if the dark mode was never activated
+  if(!darkmode){
+    store(false);
+    icon.classList.add('fa-sun');
+  } else if( darkmode == 'true'){ //if the dark mode is activated
+    body.classList.add('darkmode');
+    icon.classList.add('fa-moon');
+  } else if(darkmode == 'false'){ //if the dark mode exists but is disabled
+    icon.classList.add('fa-sun');
+  }
+}
+
+
+load();
+
+btn.addEventListener('click', () => {
+
+  body.classList.toggle('darkmode');
+  icon.classList.add('animated');
+
+  //save true or false
+  store(body.classList.contains('darkmode'));
+
+  if(body.classList.contains('darkmode')){
+    icon.classList.remove('fa-sun');
+    icon.classList.add('fa-moon');
+  }else{
+    icon.classList.remove('fa-moon');
+    icon.classList.add('fa-sun');
+  }
+
+  setTimeout( () => {
+    icon.classList.remove('animated');
+  }, 500)
+})
+  </script>
+    
+</body>
+</html>
